@@ -1,0 +1,24 @@
+{
+  "name": "slotmachine",
+  "version": "1.0.0",
+  "description": "common slot machine",
+  "main": "index.js",
+  "dependencies": {
+    "grunt": "^1.1.0",
+    "grunt-web-server": "^1.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IljaK/slotmachine.git"
+  },
+  "author": "Ilja Krusman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IljaK/slotmachine/issues"
+  },
+  "homepage": "https://github.com/IljaK/slotmachine#readme"
+}
