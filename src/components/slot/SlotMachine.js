@@ -5,6 +5,9 @@ export default class SlotMachine extends PIXI.Container {
     constructor(model) {
         super();
 
+        this.spinTimeStamp = 0;
+        this._isSpinning = false;
+        this.readyStop = false;
         this.slotModel = model;
         this.reels = []
         this.createFrame();
@@ -15,6 +18,10 @@ export default class SlotMachine extends PIXI.Container {
         for (let i = 0; i < model.reelsAmount; i++) {
             this.createReel(i);
         }
+    }
+
+    get isSpinning() {
+        return this._isSpinning;
     }
 
     createMask() {
@@ -67,11 +74,53 @@ export default class SlotMachine extends PIXI.Container {
 
     startSpin()
     {
+        if (this._isSpinning) {
+            return;
+        }
 
+        this.resultDisplay = null;
+        this._isSpinning = true;
+        this.readyStop = false;
+
+        let tween = gsap.timeline();
+
+        this.reels.forEach((reel, index) => {
+            tween.add(() => reel.startSpin(), index * 0.3)
+        });
+
+        tween.add(() => this.allowStop(), 3.0)
     }
 
-    stopSpin(display)
+    allowStop()
     {
+        this.readyStop = true;
+        if (this.resultDisplay) {
+            this.stopSpin(this.resultDisplay, this.spinCompleteCallback)
+        }
+    }
 
+    stopSpin(display, completeCallback)
+    {
+        this.spinCompleteCallback = completeCallback
+
+        if (!this.readyStop) {
+            this.resultDisplay = display;
+            return;
+        }
+        this.resultDisplay = null;
+
+        let tween = gsap.timeline({onComplete: this.onSpinCompleted.bind(this)});
+
+        this.reels.forEach((reel, index) => {
+            tween.add(() => reel.stopSpin(display[index]), index * 0.5)
+        });
+    }
+
+    onSpinCompleted()
+    {
+        this._isSpinning = false;
+        if (this.spinCompleteCallback) {
+            this.spinCompleteCallback()
+        }
     }
 }

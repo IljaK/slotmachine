@@ -90,4 +90,22 @@ export default class SlotModel {
 
         return symbols
     }
+
+    generateRandomDisplay() {
+        let display = []
+        for (let i = 0; i < this.reelsAmount; i++) {
+            display.push(this.generateRandomReel(i))
+        }
+        return display;
+    }
+
+    generateRandomReel(index) {
+        let pos = this.randomInt(0, this.reelStrip[index].length)
+        let length = this.randomInt(1,2)
+        return this.getSymbolsByPosition(pos, length, this.reelStrip[index])
+    }
+
+    randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 }

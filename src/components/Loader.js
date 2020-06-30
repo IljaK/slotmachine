@@ -18,6 +18,8 @@ export default class Loader {
         this.loader.add('Cherry.png', 'assets/symbols/Cherry.png')
         this.loader.add('reel-frame-bg.png', 'assets/reel-frame-bg.png')
 
+        this.loader.add('play.png', 'assets/buttons/play.png')
+
         this.showLoader()
         this.loader.load()
     }
