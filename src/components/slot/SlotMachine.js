@@ -17,6 +17,16 @@ export default class SlotMachine extends PIXI.Container {
         }
     }
 
+    createMask() {
+        let mask = new PIXI.Graphics();
+        mask.beginFill(0xFFFFFF)
+        mask.drawRect(-330, -162, 660, 332)
+        mask.endFill()
+
+        this.reelsContainer.addChild(mask);
+        this.reelsContainer.mask = mask;
+    }
+
     createFrame()
     {
         this.bg = new PIXI.Sprite(PIXI.loader.resources['reel-frame-bg.png'].texture)
@@ -25,14 +35,34 @@ export default class SlotMachine extends PIXI.Container {
     }
 
     createReel(index) {
-        let reel = new SlotReel(index, this.slotModel.symbolsPerReel, this.slotModel.reelStrip[index]);
-        this.reels.push(reel);
-        this.addChild(reel);
 
-        reel.x = (this.slotModel.reelWidth + this.slotModel.reelGap) * index - this.slotModel.slotMachineWidth / 2
+        this.reelsContainer = new PIXI.Container()
+        this.addChild(this.reelsContainer);
+
+        this.createMask();
+
+        let reel = new SlotReel(index, this.slotModel);
+        this.reels.push(reel);
+        this.reelsContainer.addChild(reel);
+
+        reel.x = (this.slotModel.reelWidth + this.slotModel.reelGap) * index - this.slotModel.slotMachineWidth / 2 + this.slotModel.reelWidth / 2
 
         console.log("Reel " + index + " x: " + reel.x)
 
+    }
+
+    set display(value) {
+        this.reels.forEach(reel => {
+            reel.display = value
+        });
+    }
+
+    get display() {
+        let array = []
+        this.reels.forEach(reel => {
+            array.push(reel.display)
+        });
+        return array;
     }
 
     startSpin()

@@ -18,15 +18,25 @@ export default class Loader {
         this.loader.add('Cherry.png', 'assets/symbols/Cherry.png')
         this.loader.add('reel-frame-bg.png', 'assets/reel-frame-bg.png')
 
+        this.showLoader()
         this.loader.load()
     }
 
-    onLoaderComplete(e)
-    {
+    onLoaderComplete(e) {
+        this.hideLoader();
         if (this.onComplete) this.onComplete(null)
     }
-    onLoaderProgress(e)
-    {
+    onLoaderProgress(e) {
         // TODO: Display progress
+    }
+
+    showLoader()
+    {
+        // TODO: 
+    }
+
+    hideLoader()
+    {
+        // TODO: 
     }
 }

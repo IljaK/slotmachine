@@ -7,10 +7,9 @@ export default class SlotSymbol extends PIXI.Container {
 
         this.icon = new PIXI.Sprite()
         this.addChild(this.icon)
-        this.icon.anchor.set(0, 0.5);
+        this.icon.anchor.set(0.5, 0);
 
         this.id = id;
-        this.icon = null;
     }
 
     get id(){
