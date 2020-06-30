@@ -105,7 +105,6 @@ export default class SlotReel extends PIXI.Container {
     stopSpin(display = [0,2])
     {
         this.display = display
-        this.stopSpinTween();
 
         let resultStop = this.slotModel.getReelStopPosition(this.reelStrip, display)
 
@@ -125,6 +124,7 @@ export default class SlotReel extends PIXI.Container {
         this._tweeningOffset = 0
 
         let tween = gsap.timeline({ onComplete: this.onReelStopped.bind(this) });
+        tween.add(() => this.stopSpinTween());
         tween.to(this, 1 / this.spinSpeed, {tweeningOffset: remainOffset, ease: "none"})
         tween.to(this, this.overShootDuration, {tweeningOffset: remainOffset - this.overShootDistance, ease: "sine.inOut"})
 

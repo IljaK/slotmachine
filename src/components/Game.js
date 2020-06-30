@@ -21,7 +21,7 @@ export default class Game extends PIXI.Container {
 
     onPlayClick()
     {
-        this.spinButton.interactive = false;
+        this.spinButton.isEnabled = false;
         let display = this.slotModel.generateRandomDisplay()
         this.slotMachine.startSpin()
         this.slotMachine.stopSpin(display, this.onSpinComplete.bind(this))
@@ -34,6 +34,6 @@ export default class Game extends PIXI.Container {
 
     onSpinComplete()
     {
-        this.spinButton.interactive = true;
+        this.spinButton.isEnabled = true;
     }
 }

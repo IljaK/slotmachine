@@ -112,7 +112,7 @@ export default class SlotMachine extends PIXI.Container {
         let tween = gsap.timeline({onComplete: this.onSpinCompleted.bind(this)});
 
         this.reels.forEach((reel, index) => {
-            tween.add(() => reel.stopSpin(display[index]), index * 0.5)
+            tween.add(reel.stopSpin(display[index]), index * 0.5)
         });
     }
 
