@@ -5,7 +5,7 @@ export default class SlotModel {
     reelGap = 90;
 
     symbolHeight = 141;
-    symbolGap = 45;
+    symbolGap = 30;
     symbolsPerReel = 3;
 
     reelStrip = [
