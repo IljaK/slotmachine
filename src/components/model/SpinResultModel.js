@@ -1,4 +1,4 @@
-import { SYMBOLS } from "./Constants.js";
+import { SYMBOLS, PAYTABLE } from "./Constants.js";
 
 export default class SpinResultModel {
     constructor(display) {
@@ -43,6 +43,7 @@ export default class SpinResultModel {
         for (let i = 0; i < 3; i++) {
             if (this.checkWinLine(i, lines[i])) {
                 this.winLines.push(lines[i])
+                lines[i].win = PAYTABLE[lines[i].id][1]
                 this.totalWin += lines[i].win
             }
         }
@@ -94,33 +95,26 @@ export default class SpinResultModel {
             case SYMBOLS.indexOf("Cherry"):
                 switch(lineIndex) {
                     case 0:
-                        line.win = 2000;
                         line.id = 0;
                         break
                     case 1:
-                        line.win = 1000;
                         line.id = 1;
                         break
                     case 2:
-                        line.win = 4000;
                         line.id = 2;
                         break
                 }
                 break;
             case SYMBOLS.indexOf("7"):
-                line.win = 170;
                 line.id = 3;
                 break
             case SYMBOLS.indexOf("3XBAR"):
-                line.win = 50;
                 line.id = 5;
                 break
             case SYMBOLS.indexOf("2XBAR"):
-                line.win = 20;
                 line.id = 6;
                 break
             case SYMBOLS.indexOf("BAR"):
-                line.win = 10;
                 line.id = 7;
                 break
         }
