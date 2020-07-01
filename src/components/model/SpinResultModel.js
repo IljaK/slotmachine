@@ -4,6 +4,7 @@ export default class SpinResultModel {
     constructor(display) {
         this.display = display;
         this.winLines = []
+        this.totalWin = 0;
 
         this.parsePayLines();
 
@@ -42,29 +43,31 @@ export default class SpinResultModel {
         for (let i = 0; i < 3; i++) {
             if (this.checkWinLine(i, lines[i])) {
                 this.winLines.push(lines[i])
+                this.totalWin += lines[i].win
             }
         }
     }
 
     checkWinLine(index, line) {
         if (line.symbols.length == 3 && this.areSymbolsEqual(line.symbols)) {
-            let win = getFullLinePayOut(index, line.symbols[0])
-            if (win > 0) {
-                line.winPosition = line.positions;
-                line.win = win;
-                return true;
-            }
+            this.fillFullLinePayOut(line, index, line.symbols[0])
+            line.winPosition = line.positions;
+            return true;
         } else if (line.symbols.length >= 2) {
             if (this.checkCombinationWin(line, SYMBOLS.indexOf("Cherry"), SYMBOLS.indexOf("7"), 75)) {
+                line.id = 4;
                 return true
             }
             if (this.checkCombinationWin(line, SYMBOLS.indexOf("3xBAR"), SYMBOLS.indexOf("2xBAR"), 5)) {
+                line.id = 8;
                 return true
             }
             if (this.checkCombinationWin(line, SYMBOLS.indexOf("3xBAR"), SYMBOLS.indexOf("BAR"), 5)) {
+                line.id = 9;
                 return true
             }
             if (this.checkCombinationWin(line, SYMBOLS.indexOf("2xBAR"), SYMBOLS.indexOf("BAR"), 5)) {
+                line.id = 10;
                 return true
             }
         }
@@ -86,27 +89,40 @@ export default class SpinResultModel {
         return false
     }
 
-    getFullLinePayOut(lineIndex, symbolIndex) {
+    fillFullLinePayOut(line, lineIndex, symbolIndex) {
         switch(symbolIndex) {
-            case SYMBOLS["Cherry"]:
+            case SYMBOLS.indexOf("Cherry"):
                 switch(lineIndex) {
                     case 0:
-                        return 2000;
+                        line.win = 2000;
+                        line.id = 0;
+                        break
                     case 1:
-                        return 1000;
+                        line.win = 1000;
+                        line.id = 1;
+                        break
                     case 2:
-                        return 4000;
+                        line.win = 4000;
+                        line.id = 2;
+                        break
                 }
                 break;
-            case SYMBOLS["7"]:
-                return 170;
-            case SYMBOLS["3XBAR"]:
-                return 50;
-            case SYMBOLS["2XBAR"]:
-                return 20;
-            case SYMBOLS["BAR"]:
-                return 10;
+            case SYMBOLS.indexOf("7"):
+                line.win = 170;
+                line.id = 3;
+                break
+            case SYMBOLS.indexOf("3XBAR"):
+                line.win = 50;
+                line.id = 5;
+                break
+            case SYMBOLS.indexOf("2XBAR"):
+                line.win = 20;
+                line.id = 6;
+                break
+            case SYMBOLS.indexOf("BAR"):
+                line.win = 10;
+                line.id = 7;
+                break
         }
-        return 0;
     }
 }

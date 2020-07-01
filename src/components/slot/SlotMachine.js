@@ -13,7 +13,7 @@ export default class SlotMachine extends PIXI.Container {
         this.createFrame();
 
         this.x = 220
-        this.y = 284
+        this.y = 180
         this.scale.set(0.6, 0.6)
 
         for (let i = 0; i < model.reelsAmount; i++) {

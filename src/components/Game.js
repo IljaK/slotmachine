@@ -5,6 +5,7 @@ import Paylines from './slot/Paylines.js'
 import SpinResultModel from './model/SpinResultModel.js'
 import TopPanel from './ui/TopPanel.js';
 import PayTable from './slot/PayTable.js';
+import Forcer from './ui/Forcer.js';
 
 export default class Game extends PIXI.Container {
 
@@ -30,6 +31,9 @@ export default class Game extends PIXI.Container {
 
         this.payTable = new PayTable();
         this.addChild(this.payTable)
+
+        this.forcer = new Forcer();
+        this.addChild(this.forcer)
     }
 
     onPlayClick() {
@@ -37,11 +41,19 @@ export default class Game extends PIXI.Container {
         if (this.topPanel.balance < 1) return
 
         this.topPanel.balance -= 1
+        this.topPanel.win = 0;
 
         this.payLines.stopAnimation()
+        this.payTable.stopAnimation()
+
         this.spinButton.isEnabled = false;
-        this.spinResult = new SpinResultModel(this.slotModel.generateRandomDisplay())
-        //this.spinResult = new SpinResultModel([[2],[4],[1]])
+
+        if (this.forcer.forcerValue != "") {
+            this.spinResult = new SpinResultModel(this.slotModel.generateForcedDisplay(this.forcer.forcerValue))
+        } else {
+            this.spinResult = new SpinResultModel(this.slotModel.generateRandomDisplay())
+        }
+
         this.slotMachine.startSpin()
         this.slotMachine.stopSpin(this.spinResult.display, this.onSpinComplete.bind(this))
     }
@@ -52,5 +64,8 @@ export default class Game extends PIXI.Container {
             console.log(index + " reel 0 symbol: " + reel[0] + " == slot 0 symbol: " + this.slotMachine.getSymbol(index, 0).id)
         });
         this.payLines.animateLines(this.spinResult.winLines)
+        this.payTable.animateLines(this.spinResult.winLines)
+        this.topPanel.balance += this.spinResult.totalWin
+        this.topPanel.win = this.spinResult.totalWin
     }
 }

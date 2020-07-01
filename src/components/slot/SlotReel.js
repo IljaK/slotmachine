@@ -47,7 +47,7 @@ export default class SlotReel extends PIXI.Container {
 
     set reelLayout(value) {
         this.stripPosition = this.slotModel.getReelStopPosition(this.reelStrip, value) - 1;
-        this.stripPosition = this.clampStripPosition(this.stripPosition);
+        this.stripPosition = this.slotModel.clampStripPosition(this.stripPosition, this.reelStrip);
         this.offset = this.initialOffset;
 
         if (value.length == 1) {
@@ -58,7 +58,7 @@ export default class SlotReel extends PIXI.Container {
 
     repositionSymbols() {
         this.clampOffset();
-        this.stripPosition = this.clampStripPosition(this.stripPosition);
+        this.stripPosition = this.slotModel.clampStripPosition(this.stripPosition, this.reelStrip);
         this.placeSymbols();
     }
 
@@ -87,13 +87,6 @@ export default class SlotReel extends PIXI.Container {
         }
     }
 
-    clampStripPosition(stripPosition)
-    {
-        stripPosition = Math.floor(stripPosition % (this.reelStrip.length))
-        if (stripPosition < 0) stripPosition += (this.reelStrip.length)
-        return stripPosition
-    }
-
     startSpin()
     {
         let tween = gsap.timeline({ onComplete: this.launchSpinTween.bind(this) });
@@ -118,8 +111,7 @@ export default class SlotReel extends PIXI.Container {
         }
         remainOffset += this.overShootDistance
 
-        resultStop = this.clampStripPosition(resultStop)
-        this.stripPosition = resultStop
+        this.stripPosition = this.slotModel.clampStripPosition(resultStop, this.reelStrip);
 
         this._tweeningOffset = 0
 

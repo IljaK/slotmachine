@@ -1,3 +1,5 @@
+import { SYMBOLS } from './Constants.js';
+
 export default class SlotModel {
 
     reelsAmount = 3;
@@ -9,20 +11,14 @@ export default class SlotModel {
     symbolsPerReel = 3;
 
     reelStrip = [
-        //[4, 3, 1, 0, 2],
-        //[4, 3, 1, 0, 2],
-        //[4, 3, 1, 0, 2]
-        [2, 0, 1, 3, 4],
-        [2, 0, 1, 3, 4],
-        [2, 0, 1, 3, 4]
+        [4, 3, 1, 0, 2],
+        [4, 3, 1, 0, 2],
+        [4, 3, 1, 0, 2]
     ]
 
     
     initialDisplay = [
-        //[3, 1],
-        //[4],
-        //[1, 0]
-        [1, 3],
+        [3, 1],
         [4],
         [1, 0]
     ];
@@ -113,5 +109,39 @@ export default class SlotModel {
 
     randomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    generateForcedDisplay(value) {
+        let display = []
+        for (let i = 0; i < this.reelsAmount; i++ ) {
+            let step = i * 2
+            display.push(this.generateForcedReel(i, parseInt(value.charAt(step)), parseInt(value.charAt(step + 1))))
+        }
+        return display;
+    }
+
+    generateForcedReel(reel, symbol, position) {
+        symbol = this.clampValue(symbol, 0, SYMBOLS.length - 1)
+        position = this.clampValue(position, 0, 2)
+
+        let stopPosition = this.reelStrip[reel].indexOf(symbol)
+        let amount = 2;
+        if (position === 1) amount = 1
+        if (position === 0) stopPosition -= 1
+
+        stopPosition = this.clampStripPosition(stopPosition, this.reelStrip[reel])
+
+        return this.getSymbolsByPosition(stopPosition, amount, this.reelStrip[reel]).reverse()
+    }
+
+    clampValue(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+    }
+
+    clampStripPosition(position, reelStrip)
+    {
+        position = Math.floor(position % (reelStrip.length))
+        if (position < 0) position += (reelStrip.length)
+        return position
     }
 }
