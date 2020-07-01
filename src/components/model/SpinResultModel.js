@@ -14,6 +14,7 @@ export default class SpinResultModel {
         let lines = []
         for (let i = 0; i < 3; i++) {
             lines.push({
+                line: i,
                 symbols:[],
                 positions:[]
             })
@@ -27,9 +28,9 @@ export default class SpinResultModel {
                 lines[1].positions.push(i)
             }
             else {
-                lines[0].symbols.push(reel[1])
+                lines[0].symbols.push(reel[0])
                 lines[0].positions.push(i)
-                lines[2].symbols.push(reel[0])
+                lines[2].symbols.push(reel[1])
                 lines[2].positions.push(i)
             }
         }
@@ -40,7 +41,6 @@ export default class SpinResultModel {
 
         for (let i = 0; i < 3; i++) {
             if (this.checkWinLine(i, lines[i])) {
-                lines[i].line = i;
                 this.winLines.push(lines[i])
             }
         }

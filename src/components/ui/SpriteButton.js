@@ -56,6 +56,7 @@ export default class SpriteButton extends PIXI.Sprite {
     get isEnabled() {
         return this.interactive
     }
+    
     set isEnabled(value) {
         this.interactive = value;
         if (!value) {

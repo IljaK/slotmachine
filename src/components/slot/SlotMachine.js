@@ -12,8 +12,9 @@ export default class SlotMachine extends PIXI.Container {
         this.reels = []
         this.createFrame();
 
-        this.x = 384
-        this.y = 384
+        this.x = 220
+        this.y = 284
+        this.scale.set(0.6, 0.6)
 
         for (let i = 0; i < model.reelsAmount; i++) {
             this.createReel(i);
@@ -88,7 +89,7 @@ export default class SlotMachine extends PIXI.Container {
             tween.add(() => reel.startSpin(), index * 0.3)
         });
 
-        tween.add(() => this.allowStop(), 3.0)
+        tween.add(() => this.allowStop(), 2.0)
     }
 
     allowStop()
