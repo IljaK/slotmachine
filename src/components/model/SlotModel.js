@@ -9,14 +9,20 @@ export default class SlotModel {
     symbolsPerReel = 3;
 
     reelStrip = [
-        [4, 3, 1, 0, 2],
-        [4, 3, 1, 0, 2],
-        [4, 3, 1, 0, 2]
+        //[4, 3, 1, 0, 2],
+        //[4, 3, 1, 0, 2],
+        //[4, 3, 1, 0, 2]
+        [2, 0, 1, 3, 4],
+        [2, 0, 1, 3, 4],
+        [2, 0, 1, 3, 4]
     ]
 
     
     initialDisplay = [
-        [3, 1],
+        //[3, 1],
+        //[4],
+        //[1, 0]
+        [1, 3],
         [4],
         [1, 0]
     ];
@@ -102,7 +108,7 @@ export default class SlotModel {
     generateRandomReel(index) {
         let pos = this.randomInt(0, this.reelStrip[index].length)
         let length = this.randomInt(1,2)
-        return this.getSymbolsByPosition(pos, length, this.reelStrip[index])
+        return this.getSymbolsByPosition(pos, length, this.reelStrip[index]).reverse()
     }
 
     randomInt(min, max) {

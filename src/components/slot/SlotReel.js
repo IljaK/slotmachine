@@ -102,11 +102,11 @@ export default class SlotReel extends PIXI.Container {
         return tween;
     }
 
-    stopSpin(display = [0,2])
+    stopSpin(display)
     {
         this.display = display
 
-        let resultStop = this.slotModel.getReelStopPosition(this.reelStrip, display)
+        let resultStop = this.slotModel.getReelStopPosition(this.reelStrip, display.slice().reverse())
 
         let slotHeight = this.slotHeight;
         let remainOffset = slotHeight + this.initialOffset - this.offset;
@@ -176,6 +176,9 @@ export default class SlotReel extends PIXI.Container {
         let stripSize = this.slotHeight * (this.reelStrip.length);
 
         this.spinLoopTween = gsap.to(this, 1 / this.spinSpeed, {tweeningOffset: stripSize, ease: "none", repeat: -1})
+    }
 
+    getSymbol(index) {
+        return this.symbols[index + 1];
     }
 }

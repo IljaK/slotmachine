@@ -123,4 +123,8 @@ export default class SlotMachine extends PIXI.Container {
             this.spinCompleteCallback()
         }
     }
+
+    getSymbol(reel, index) {
+        return this.reels[reel].getSymbol(index)
+    }
 }
