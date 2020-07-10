@@ -41,7 +41,7 @@ export default class SpinResultModel {
     parseWinLines(lines) {
 
         for (let i = 0; i < 3; i++) {
-            if (this.checkWinLine(i, lines[i])) {
+            if (this.checkWinLine(lines[i], i)) {
                 this.winLines.push(lines[i])
                 lines[i].win = PAYTABLE[lines[i].id][1]
                 this.totalWin += lines[i].win
@@ -49,7 +49,7 @@ export default class SpinResultModel {
         }
     }
 
-    checkWinLine(index, line) {
+    checkWinLine(line, index) {
         if (line.symbols.length == 3 && this.areSymbolsEqual(line.symbols)) {
             this.fillFullLinePayOut(line, index, line.symbols[0])
             line.winPosition = line.positions;
@@ -108,10 +108,10 @@ export default class SpinResultModel {
             case SYMBOLS.indexOf("7"):
                 line.id = 3;
                 break
-            case SYMBOLS.indexOf("3XBAR"):
+            case SYMBOLS.indexOf("3xBAR"):
                 line.id = 5;
                 break
-            case SYMBOLS.indexOf("2XBAR"):
+            case SYMBOLS.indexOf("2xBAR"):
                 line.id = 6;
                 break
             case SYMBOLS.indexOf("BAR"):
