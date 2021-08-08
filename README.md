@@ -5,4 +5,4 @@ Common slot machine with:
 * Balance counter
 * Forcer
 
-[Play slot](http://punishervip.asuscomm.com/web/slots/slot/)
+[Play slot machine](http://punishervip.asuscomm.com/web/slots/slot/)
